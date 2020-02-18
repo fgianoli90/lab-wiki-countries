@@ -14,22 +14,22 @@ class CountryDetails extends Component {
         
     }
     listOfBorders=(theCountry)=>{
-      let arrayOfBorderingCountries =[]
-      let borders=theCountry.borders //for the country currentlly selected, get the associated borders
-      console.log('Inside borders',borders)
-      borders.map(eachAbbr => {       //loop through the borders array
-        let borderCountries=this.props.countries.find(eachCountry=>{  //loop the countries passed as prop and find the abbreviated border country
+      let arrayOfBorderingCountries =[] //Array to push bordering countries found that equal the borders abbreviations
+      let borders=theCountry.borders    //for the country currentlly selected, get the associated borders
+      
+      borders.map(eachAbbr => {         //loop through the borders array
+        let borderCountries=this.props.countries.find(eachCountry=>{  //loop the countries passed as a prop and find the abbreviated border country
           return eachCountry.cca3 === eachAbbr
         })
-        return arrayOfBorderingCountries.push(borderCountries)
+        return arrayOfBorderingCountries.push(borderCountries) //push found country into array of borering countries and do next iteration in borders loop
       })
-      return arrayOfBorderingCountries.map(country=>{
-        return <li><Link key={country.cca3} to={`/country-detail/${country.cca3}`}>{country.name.common}</Link></li>
+      return arrayOfBorderingCountries.map(country=>{ //since country object pushed into array and we need name, map through array and return link with country name
+        return <li key={country.cca3}><Link to={`/country-details/${country.cca3}`}>{country.name.common}</Link></li>
       })
     }
 
     render() {
-      let theCountry = this.findDetails()
+      let theCountry = this.findDetails() //need variable to hold what function find details will return as country object 
       console.log(theCountry)
         return (
             <div className="col-7">
@@ -52,15 +52,7 @@ class CountryDetails extends Component {
                   <td>Borders</td>
                   <td>
                     <ul>
-                      {this.listOfBorders(theCountry)}
-                      {/* <li><a href="/AND">Andorra</a></li>
-                      <li><a href="/BEL">Belgium</a></li>
-                      <li><a href="/DEU">Germany</a></li>
-                      <li><a href="/ITA">Italy</a></li>
-                      <li><a href="/LUX">Luxembourg</a></li>
-                      <li><a href="/MCO">Monaco</a></li>
-                      <li><a href="/ESP">Spain</a></li>
-                      <li><a href="/CHE">Switzerland</a></li> */}
+                      {this.listOfBorders(theCountry)} 
                     </ul>
                   </td>
                 </tr>

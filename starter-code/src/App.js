@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom'
-import CountryDetails from './CountryDetails'
+import CountryDetails from './CountryDetails.jsx'
 import './App.css';
 import countries from './countries.json'
 
 class App extends Component {
 
   state = {
-    countries// Same thing ===> countries:countries
+    countries   // Same thing ===> countries:countries
   }
 
-
+//Method that returns list of countries as links 
   showCountryLinks = () => {
     let countryList = [...this.state.countries]
     return countryList.map(eachCountry => {
-      return <Link key={eachCountry.cca3} to={`/country-detail/${eachCountry.cca3}`}>{eachCountry.name.common}</Link>
+      //link to must equal that of which is in route
+      return <Link key={eachCountry.cca3} to={`/country-details/${eachCountry.cca3}`}><span role="img">{eachCountry.flag}</span>{eachCountry.name.common}</Link>
     })
   }
 
@@ -37,9 +38,9 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {/**Invisible */}
+        {/**Invisible; route path must be equal to that which is in <Link/>; must past props to Country Detail component to have browser history; can pass countries here since its been imported already or import in Country Detail component*/}
         <Switch>
-          <Route exact path="/country-detail/:hippopotamus" render={(props) => <CountryDetails {...props} cool="super fantastically amaxzing" countries={this.state.countries} />} />
+          <Route exact path="/country-details/:hippopotamus" render={(props) => <CountryDetails {...props} countries={this.state.countries} />} />
 
         </Switch>
       </div>
